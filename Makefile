@@ -1,9 +1,11 @@
 FLAGS += \
 	-Iinclude \
+	-Iext \
+	-Idep/lib/libzip/include \
 	-Idep/include -Idep/lib/libzip/include
 
 ALL_SOURCES = $(wildcard src/*.cpp src/*/*.cpp) \
-	 	 	ext/nanovg/src/nanovg.c
+	 	 		ext/nanovg/src/nanovg.c
 
 MAIN_APP := src/main.cpp
 TEST_APP := tests/doctest.cpp
@@ -45,12 +47,24 @@ endif
 
 
 all: $(MAIN_APP) $(TARGET)
-doctest: doctest $(TEST_APP) $(TARGET)
+btest: doctest $(TEST_APP) $(TARGET)
 
 dep:
 	$(MAKE) -C dep
 
 run: $(TARGET)
+ifeq ($(ARCH), lin)
+	LD_LIBRARY_PATH=dep/lib ./$<
+endif
+ifeq ($(ARCH), mac)
+	DYLD_FALLBACK_LIBRARY_PATH=dep/lib ./$<
+endif
+ifeq ($(ARCH), win)
+	# TODO get rid of the mingw64 path
+	env PATH=dep/bin:/mingw64/bin ./$<
+endif
+
+test: doctest
 ifeq ($(ARCH), lin)
 	LD_LIBRARY_PATH=dep/lib ./$<
 endif

@@ -4,7 +4,8 @@ endif
 
 # Generate dependency files alongside the object files
 FLAGS += -MMD
-FLAGS += -g
+FLAGS += -g -w # avoid warning messages
+
 # Optimization
 FLAGS += -O3 -march=nocona -ffast-math -fno-finite-math-only
 FLAGS += -Wall -Wextra -Wno-unused-parameter
@@ -36,7 +37,6 @@ endif
 OBJECTS += $(patsubst %, build/%.o, $(SOURCES))
 DEPS = $(patsubst %, build/%.d, $(SOURCES))
 
-
 #
 # Tests
 #
@@ -48,7 +48,7 @@ doctest: $(TEST_APP) $(OBJECTS)
 
 # Final targets
 $(TARGET): $(MAIN_APP) $(OBJECTS)
-	$(CXX) -o $@ $^ $(LDFLAGS)
+	$(CXX) $(FLAGS) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
 
 
 -include $(DEPS)

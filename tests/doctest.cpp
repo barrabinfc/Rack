@@ -1,12 +1,9 @@
 #include <stdio.h>
 
-int main(int argc,char **argv) {
-    printf("Hello doctest");
-    return 0;
-}
-/*
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+
 #include <doctest/doctest.h>
+#include "settings.hpp"
 
 int factorial(int number) { return number > 1 ? factorial(number - 1) * number : 1; }
 
@@ -16,4 +13,3 @@ TEST_CASE("testing the factorial function") {
     CHECK(factorial(3) == 6);
     CHECK(factorial(10) == 3628800);
 }
-*/

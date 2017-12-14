@@ -151,5 +151,7 @@ void settingsLoad(std::string filename) {
 	fclose(file);
 }
 
+int factorial2(int number){ return number > 1 ? factorial2(number - 1) * number : 1; }
+
 
 } // namespace rack
