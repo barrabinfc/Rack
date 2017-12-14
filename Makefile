@@ -2,9 +2,13 @@ FLAGS += \
 	-Iinclude \
 	-Idep/include -Idep/lib/libzip/include
 
-SOURCES = $(wildcard src/*.cpp src/*/*.cpp) \
-	ext/nanovg/src/nanovg.c
+ALL_SOURCES = $(wildcard src/*.cpp src/*/*.cpp) \
+	 	 	ext/nanovg/src/nanovg.c
 
+MAIN_APP := src/main.cpp
+TEST_APP := tests/doctest.cpp
+
+SOURCES := $(filter-out $(MAIN_APP) $(TEST_APP), $(ALL_SOURCES))
 
 include arch.mk
 
@@ -40,7 +44,8 @@ ifeq ($(ARCH), win)
 endif
 
 
-all: $(TARGET)
+all: $(MAIN_APP) $(TARGET)
+doctest: doctest $(TEST_APP) $(TARGET)
 
 dep:
 	$(MAKE) -C dep
@@ -68,7 +73,6 @@ ifeq ($(ARCH), win)
 	# TODO get rid of the mingw64 path
 	env PATH=dep/bin:/mingw64/bin gdb -ex run ./Rack
 endif
-
 
 clean:
 	rm -rfv $(TARGET) build dist
@@ -157,14 +161,8 @@ ifeq ($(ARCH), lin)
 	mkdir -p dist/Rack
 	cp -R LICENSE* res dist/Rack/
 	cp Rack Rack.sh dist/Rack/
-	cp dep/lib/libsamplerate.so.0 dist/Rack/
-	cp dep/lib/libjansson.so.4 dist/Rack/
-	cp dep/lib/libGLEW.so.2.1 dist/Rack/
-	cp dep/lib/libglfw.so.3 dist/Rack/
 	cp dep/lib/libcurl.so.4 dist/Rack/
 	cp dep/lib/libzip.so.5 dist/Rack/
-	cp dep/lib/librtaudio.so dist/Rack/
-	cp dep/lib/librtmidi.so.4 dist/Rack/
 	mkdir -p dist/Rack/plugins
 	cp -R plugins/Fundamental/dist/Fundamental dist/Rack/plugins/
 	# Make ZIP

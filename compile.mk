@@ -37,9 +37,17 @@ OBJECTS += $(patsubst %, build/%.o, $(SOURCES))
 DEPS = $(patsubst %, build/%.d, $(SOURCES))
 
 
-# Final targets
+#
+# Tests
+#
+doctest: $(TEST_APP) $(OBJECTS)
+	$(CXX) $(FLAGS) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
 
-$(TARGET): $(OBJECTS)
+-include $(DEPS)
+
+
+# Final targets
+$(TARGET): $(MAIN_APP) $(OBJECTS)
 	$(CXX) -o $@ $^ $(LDFLAGS)
 
 
