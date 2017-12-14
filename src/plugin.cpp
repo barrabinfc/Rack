@@ -97,7 +97,7 @@ void Plugin::addModel(Model *model) {
 }
 
 
-static int loadPlugin(std::string path) {
+int loadPlugin(std::string path) {
 	std::string libraryFilename;
 #if ARCH_LIN
 	libraryFilename = path + "/" + "plugin.so";

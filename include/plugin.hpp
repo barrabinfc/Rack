@@ -103,6 +103,8 @@ struct Model {
 	virtual ModuleWidget *createModuleWidget() { return NULL; }
 };
 
+int loadPlugin(std::string path);
+
 void pluginInit();
 void pluginDestroy();
 void pluginLogIn(std::string email, std::string password);

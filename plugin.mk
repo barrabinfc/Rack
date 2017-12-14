@@ -1,7 +1,8 @@
 # All paths here assume the PWD is plugin/something
 
 FLAGS += -fPIC \
-	-I../../include -I../../dep/include
+		 -I../../ext \
+		 -I../../include -I../../dep/include
 
 include ../../arch.mk
 

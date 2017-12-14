@@ -65,14 +65,14 @@ endif
 
 test: doctest
 ifeq ($(ARCH), lin)
-	LD_LIBRARY_PATH=dep/lib ./$<
+	LD_LIBRARY_PATH=dep/lib ./$< $(plugin)
 endif
 ifeq ($(ARCH), mac)
-	DYLD_FALLBACK_LIBRARY_PATH=dep/lib ./$<
+	DYLD_FALLBACK_LIBRARY_PATH=dep/lib ./$< $(plugin)
 endif
 ifeq ($(ARCH), win)
 	# TODO get rid of the mingw64 path
-	env PATH=dep/bin:/mingw64/bin ./$<
+	env PATH=dep/bin:/mingw64/bin ./$< $(plugin)
 endif
 
 debug: $(TARGET)
