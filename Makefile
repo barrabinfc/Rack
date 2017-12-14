@@ -47,7 +47,6 @@ endif
 
 
 all: $(MAIN_APP) $(TARGET)
-btest: doctest $(TEST_APP) $(TARGET)
 
 dep:
 	$(MAKE) -C dep
